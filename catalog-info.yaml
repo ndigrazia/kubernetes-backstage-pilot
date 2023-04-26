@@ -3,7 +3,7 @@ kind: Component
 metadata:
   name: "kubernetes-backstage"
   annotations:
-    'backstage.io/kubernetes-namespace': default
+    backstage.io/kubernetes-id: value
 spec:
   type: service
   owner: user:guest
