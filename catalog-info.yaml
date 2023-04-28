@@ -4,7 +4,7 @@ metadata:
   name: "kubernetes-backstage"
   annotations:
     backstage.io/kubernetes-id: my-kubernetes-component
-    backstage.io/kubernetes-namespace: backstage
+    backstage.io/kubernetes-namespace: demospace
 spec:
   type: service
   owner: user:guest
