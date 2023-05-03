@@ -40,6 +40,15 @@ spec:
         }
       }
     }
+    
+    stage('Deploy') {
+      steps {
+        container('kubectl') {
+          sh "kubectl delete -f deployment.yaml"
+          sh "kubectl apply -f deployment.yaml"
+        }
+      }
+    }
 
   }
 }
