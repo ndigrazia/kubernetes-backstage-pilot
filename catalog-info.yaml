@@ -5,6 +5,7 @@ metadata:
   annotations:
     backstage.io/kubernetes-id: node-web-app
     backstage.io/kubernetes-namespace: default
+    backstage.io/techdocs-ref: dir:.
 spec:
   type: service
   owner: user:guest
