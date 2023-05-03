@@ -36,6 +36,7 @@ spec:
       steps {
          container('docker') {
             sh "docker build -t localhost:32000/node-web-app:latest ."
+            sh "docker push localhost:32000/node-web-app:latest"
         }
       }
     }
