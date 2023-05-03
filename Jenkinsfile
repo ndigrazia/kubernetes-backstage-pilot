@@ -35,7 +35,7 @@ spec:
     stage('Build image') {
       steps {
          container('docker') {
-            sh "docker build -t node-web-app ."
+            sh "docker build -t localhost:32000/node-web-app:latest ."
         }
       }
     }
