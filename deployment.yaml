@@ -17,5 +17,5 @@ spec:
     spec:
       containers:
         - name: node-web-app
-          image: node-web-app
+          image: localhost:32000/node-web-app:latest
           
