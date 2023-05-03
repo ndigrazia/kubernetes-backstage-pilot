@@ -34,7 +34,9 @@ spec:
   stages {
     stage('Build image') {
       steps {
-        container(name: 'docker')
+         container('docker') {
+            sh "docker build -t node-web-app ."
+        }
       }
     }
 
