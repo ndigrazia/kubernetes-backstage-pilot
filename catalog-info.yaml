@@ -6,7 +6,7 @@ metadata:
     backstage.io/kubernetes-id: node-web-app
     backstage.io/kubernetes-namespace: default
     backstage.io/techdocs-ref: dir:.
-    jenkins.io/github-folder: 'kubernetes-backstage'
+    jenkins.io/job-full-name: "kubernetes-backstage"
 spec:
   type: service
   owner: user:guest
