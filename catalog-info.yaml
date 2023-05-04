@@ -6,7 +6,7 @@ metadata:
     backstage.io/kubernetes-id: node-web-app
     backstage.io/kubernetes-namespace: default
     backstage.io/techdocs-ref: dir:.
-    jenkins.io/github-folder: 'backstage/kubernetes-backstage-pipeline'
+    jenkins.io/github-folder: 'backstage-git-scm/Github'
 spec:
   type: service
   owner: user:guest
