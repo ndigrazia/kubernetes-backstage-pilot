@@ -188,7 +188,7 @@ kubectl exec --namespace default -it <pod-id> -c jenkins -- /bin/cat /run/secret
 ### Connect to Jenkins as an administrator
 kubectl get svc -n default | grep jenkins
 
-kubectl --namespace default port-forward svc/<service-id> 8080:8080
+kubectl --namespace default port-forward svc/\<service-id> 8080:8080
 
 Example:  kubectl --namespace default port-forward svc/jenkins-1683125347 8080:8080
 
