@@ -49,18 +49,64 @@ See https://backstage.io/docs/getting-started/
 See https://backstage.io/docs/getting-started/configuration
 
 
+### Config GitHub 
+
+
+#### Set GitHub Token 
+export GITHUB_TOKEN=<github-token> 
+NOTE: Get token from Github.com
+
+
+#### Config Github in app-config.yaml
+add:
+
+```yaml
+integrations:
+  github:
+    - host: github.com
+      # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
+      # about setting up the GitHub integration here: https://backstage.io/docs/getting-started/configuration#setting-up-a-github-integration
+      token: ${GITHUB_TOKEN}
+    ### Example for how to add your GitHub Enterprise instance using the API:
+    # - host: ghe.example.net
+    #   apiBaseUrl: https://ghe.example.net/api/v3
+    #   token: ${GHE_TOKEN}
+```
+
+
+### Config Postgress in app-config.yaml
+add:
+
+```yaml
+backend:
+ database:
+    client: pg
+    connection:
+      host: localhost
+      port: 5432
+      user: postgres
+      password: secret 
+```
+
+
+
+## Kubernetes Plugin
+
+
 ### Kubernetes control plane 
 alias mkctl="microk8s kubectl"
 mkctl cluster-info
 
 Kubernetes control plane is running at https://127.0.0.1:16443
 
+
 ### Integration Kubernetes  
 https://backstage.io/docs/features/kubernetes/
 
 https://backstage.io/docs/features/kubernetes/configuration/
 
-### Config Kubernetes token
+
+### Set Kubernetes token
 
 microk8s kubectl create serviceaccount backstage -n default
 microk8s kubectl create clusterrolebinding backstage-clusterrolebinding --clusterrole=cluster-admin --serviceaccount=default:backstage
@@ -91,54 +137,111 @@ kubernetes:
           #caData: ${K8S_CONFIG_CA_DATA}
 ```
 
-### Config GitHub 
 
-#### Set GitHub Token 
-export GITHUB_TOKEN=<github-token> 
-NOTE: Get token from Github.com
+## Jenkins Plugin
 
-#### Config Github in app-config.yaml
+
+### Integration Jenkins
+https://github.com/backstage/backstage/tree/master/plugins/jenkins
+
+https://www.npmjs.com/package/@backstage/plugin-jenkins-backend
+
+## Deploy jenkins on Kubernetes
+helm repo add jenkins https://charts.jenkins.io
+helm repo update
+helm search repo jenkins --devel --versions
+helm install jenkins jenkins/jenkins	4.3.23 --namespace default
+
+
+## Uninstall jenkins 
+helm uninstall jenkins
+
+### Config Jenkins in app-config.yaml
 add:
 
 ```yaml
-integrations:
-  github:
-    - host: github.com
-      # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
-      # about setting up the GitHub integration here: https://backstage.io/docs/getting-started/configuration#setting-up-a-github-integration
-      token: ${GITHUB_TOKEN}
-    ### Example for how to add your GitHub Enterprise instance using the API:
-    # - host: ghe.example.net
-    #   apiBaseUrl: https://ghe.example.net/api/v3
-    #   token: ${GHE_TOKEN}
+jenkins:
+  baseUrl: http://localhost:8080
+  username: admin
+  apiKey: 1131dfee75059201cdd63633b784c25e15 #Get Token From Jenkins
+  # optionally add extra headers
+  # extraRequestHeaders:
+  #   extra-header: my-value
 ```
 
-### Config Postgress in app-config.yaml
-add:
+### Get your 'admin' user password:
+kubectl get pods -n default | grep jenkins
+kubectl exec --namespace default -it <pod-id> -c jenkins -- /bin/cat /run/secrets/additional/chart-admin-password && echo
+
+
+### Connect to Jenkins as an administrator
+kubectl get svc -n default | grep jenkins
+kubectl --namespace default port-forward svc/<service-id> 8080:8080
+
+Example:  kubectl --namespace default port-forward svc/jenkins-1683125347 8080:8080
+
+NOTE: Open localhost:8080 in a browser. Conect to jenkins with user Admin & password <See Get your 'admin' user password>
+
+
+### Get Token From Jenkins
+Log in to the Jenkins instance as an administrator
+Click on “Manage Jenkins” in the Jenkins dashboard
+Click on the “Manage Users“
+Select the user we want to generate an API token for and click on their name to access their user configuration page
+Generate a token using the “Add new token” section of the user configuration page
+Click on the “Copy” button to copy the token to the clipboard
+Save the configurations
+
+### Add a pipeline to Jenkins
+Log in to the Jenkins instance as an administrator
+Create a Organization Folder item with backstage-git-scm name
+Add a Project: Single repository
+Assign a project name
+Select a source name: Github
+Select a Credential
+Asign a Repository HTTPS URL (Github repository where is your jenkinsfile) - https://github.com/ndigrazia/kubernetes-backstage-pilot.git
+
+
+##  Catalog File
+Create a catalog-info.yaml file in your project
 
 ```yaml
-backend:
- database:
-    client: pg
-    connection:
-      host: localhost
-      port: 5432
-      user: postgres
-      password: secret 
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "kubernetes-backstage"
+  annotations:
+    backstage.io/kubernetes-id: node-web-app # container name - See deployment.yaml file
+    backstage.io/kubernetes-namespace: default # kubernetes namespace where is container deployed 
+    backstage.io/techdocs-ref: dir:.
+    jenkins.io/github-folder: 'backstage-git-scm/Github' #github-organization-project-name/job-name - See Add a pipeline to Jenkins
+spec:
+  type: service
+  owner: user:guest
+  lifecycle: experimental
 ```
 
-###  Start Backstage
+##  Start Backstage
 
-####  Set Enviroment
-See "Config Kubernetes token"
+###  Set Enviroment
+See "Set Kubernetes token"
 See "Set GitHub Token" 
 
-#### Start docker postgress
+### Start microk8s
+microk8s start
+
+### Start docker postgress
 ocker run --name postgres -e POSTGRES_PASSWORD=secret -e POSTGRES_USER=postgres-p 5432:5432 -d postgres
+
+Or:
 
 docker ps -a | grep postgres
 docker start <container-id>
 
-#### Start Backstage service - Dev
+### Start Jenkins
+kubectl get svc -n default | grep jenkins
+kubectl --namespace default port-forward svc/<service-id> 8080:8080
+
+### Start Backstage service - Dev
 cd backstage
 yarn dev
