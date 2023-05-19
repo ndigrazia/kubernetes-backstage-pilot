@@ -56,6 +56,7 @@ See https://backstage.io/docs/getting-started/configuration
 export GITHUB_TOKEN=<github-token> 
 NOTE: Get token from Github.com
 
+Or you can add a Github token to app-config.local.yaml file. If you do that, you don't need to export
 
 #### Config Github in app-config.yaml
 add:
