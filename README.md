@@ -273,7 +273,7 @@ docker start \<container-id>
 ### Start Jenkins
 kubectl get svc -n default | grep jenkins
 
-kubectl --namespace default port-forward svc/<service-id> 8080:8080
+kubectl --namespace default port-forward svc/\<service-id> 8080:8080
 
 ### Start Backstage service - Dev
 cd backstage
