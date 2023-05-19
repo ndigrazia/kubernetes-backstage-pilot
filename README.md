@@ -202,6 +202,12 @@ Select a source name: Github
 Select a Credential
 Asign a Repository HTTPS URL (Github repository where is your jenkinsfile) - https://github.com/ndigrazia/kubernetes-backstage-pilot.git
 
+### Kubernetes plugin to Jenkins
+
+Install & configure Jenkins with Kubernetes
+
+https://plugins.jenkins.io/kubernetes/
+
 
 ##  Catalog File
 Create a catalog-info.yaml file in your project
