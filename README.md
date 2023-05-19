@@ -27,6 +27,7 @@ microk8s disable <name>
 
 ### Start and stop Kubernetes
 microk8s start 
+
 microk8s stop 
 
 
@@ -53,7 +54,8 @@ See https://backstage.io/docs/getting-started/configuration
 
 
 #### Set GitHub Token 
-export GITHUB_TOKEN=<github-token> 
+export GITHUB_TOKEN=\<github-token> 
+
 NOTE: Get token from Github.com
 
 Or you can add a Github token to app-config.local.yaml file. If you do that, you don't need to export
@@ -96,6 +98,7 @@ backend:
 
 ### Kubernetes control plane 
 alias mkctl="microk8s kubectl"
+
 mkctl cluster-info
 
 Kubernetes control plane is running at https://127.0.0.1:16443
@@ -110,11 +113,14 @@ https://backstage.io/docs/features/kubernetes/configuration/
 ### Set Kubernetes token
 
 microk8s kubectl create serviceaccount backstage -n default
+
 microk8s kubectl create clusterrolebinding backstage-clusterrolebinding --clusterrole=cluster-admin --serviceaccount=default:backstage
+
 export K8S_MINIKUBE_TOKEN_NAME=$(kubectl -n default get serviceaccount/backstage -o jsonpath='{.secrets[0].name}')
+
 export K8S_MINIKUBE_TOKEN=$(kubectl -n default get secret $K8S_MINIKUBE_TOKEN_NAME -o jsonpath='{.data.token}' | base64 --decode)
 
-NOTE: If token is empty use: (example)
+NOTE: If token is empty, use: (example)
 
 export K8S_MINIKUBE_TOKEN=eyJhbGciOiJSUzI1NiIsImtpZCI6IktSUEhyUmY4aUVSVGVMbllRcU1jTmZZTTR2SUZPY2NEbXh3SnU2emt1c3MifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJtaWNyb2s4cy1kYXNoYm9hcmQtdG9rZW4iLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiZGVmYXVsdCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6ImI1MjE1ODNmLTgxZjYtNDRmNy04MGFiLTI4Y2JlNzhkN2QzOSIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTpkZWZhdWx0In0.QqbYb7GpZyHPSDCysZo9sMEm3AZA2HF_TWw6TBDofiakA0xad7i5INQ_7AiE_08GPBJJLM7u4ymZGP44oWZfDVBNSedzKGoo4dpU5nFWqBAjmglCtMxASYLZnlFnrS1SoiQYs5plTkJ0L8vwfYMIjTK8Do1nQ13qdpRXE5mDoy2857e4W-rlaE4grbwtknky2fgZA7HIDa3c-l9sNqoPSTEeo9oWkhn3Y-GFha4hcXW8NP4GuEWf8FliqA5-H7zddPS7sJ8Cr9UvpU7izSSIP40VC_vv5DngPtngbMf05JMoGQMABytHtffHLsB60DzDfJiHNZeOmkknGiYfOdNndA
 
@@ -149,8 +155,11 @@ https://www.npmjs.com/package/@backstage/plugin-jenkins-backend
 
 ## Deploy jenkins on Kubernetes
 helm repo add jenkins https://charts.jenkins.io
+
 helm repo update
+
 helm search repo jenkins --devel --versions
+
 helm install jenkins jenkins/jenkins	4.3.23 --namespace default
 
 
@@ -172,11 +181,13 @@ jenkins:
 
 ### Get your 'admin' user password:
 kubectl get pods -n default | grep jenkins
+
 kubectl exec --namespace default -it <pod-id> -c jenkins -- /bin/cat /run/secrets/additional/chart-admin-password && echo
 
 
 ### Connect to Jenkins as an administrator
 kubectl get svc -n default | grep jenkins
+
 kubectl --namespace default port-forward svc/<service-id> 8080:8080
 
 Example:  kubectl --namespace default port-forward svc/jenkins-1683125347 8080:8080
@@ -186,20 +197,32 @@ NOTE: Open localhost:8080 in a browser. Conect to jenkins with user Admin & pass
 
 ### Get Token From Jenkins
 Log in to the Jenkins instance as an administrator
+
 Click on “Manage Jenkins” in the Jenkins dashboard
+
 Click on the “Manage Users“
+
 Select the user we want to generate an API token for and click on their name to access their user configuration page
+
 Generate a token using the “Add new token” section of the user configuration page
+
 Click on the “Copy” button to copy the token to the clipboard
+
 Save the configurations
 
 ### Add a pipeline to Jenkins
 Log in to the Jenkins instance as an administrator
+
 Create a Organization Folder item with backstage-git-scm name
+
 Add a Project: Single repository
+
 Assign a project name
+
 Select a source name: Github
+
 Select a Credential
+
 Asign a Repository HTTPS URL (Github repository where is your jenkinsfile) - https://github.com/ndigrazia/kubernetes-backstage-pilot.git
 
 ### Kubernetes plugin to Jenkins
@@ -232,23 +255,27 @@ spec:
 
 ###  Set Enviroment
 See "Set Kubernetes token"
+
 See "Set GitHub Token" 
 
 ### Start microk8s
 microk8s start
 
 ### Start docker postgress
-ocker run --name postgres -e POSTGRES_PASSWORD=secret -e POSTGRES_USER=postgres-p 5432:5432 -d postgres
+docker run --name postgres -e POSTGRES_PASSWORD=secret -e POSTGRES_USER=postgres-p 5432:5432 -d postgres
 
 Or:
 
 docker ps -a | grep postgres
-docker start <container-id>
+
+docker start \<container-id>
 
 ### Start Jenkins
 kubectl get svc -n default | grep jenkins
+
 kubectl --namespace default port-forward svc/<service-id> 8080:8080
 
 ### Start Backstage service - Dev
 cd backstage
+
 yarn dev
