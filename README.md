@@ -1,57 +1,66 @@
 # kubernetes-backstage-pilot
-This is kubernetes-backstage
 
+En el ámbito de la gestión y despliegue de aplicaciones, Kubernetes ha emergido como una plataforma líder que facilita la orquestación eficiente de contenedores. Al mismo tiempo, herramientas como Backstage han ganado popularidad al proporcionar un entorno centralizado para la gestión del ciclo de vida de las aplicaciones. Este proyecto de investigación y prueba se enfoca en la sinergia entre Kubernetes y Backstage, explorando cómo su integración puede mejorar la eficiencia en el desarrollo, implementación y mantenimiento de aplicaciones en entornos modernos.
+
+## Contexto:
+
+Kubernetes, desarrollado por Google, ha revolucionado la gestión de contenedores al proporcionar una plataforma robusta y escalable para automatizar la implementación, escalado y operaciones de aplicaciones en contenedores. Por otro lado, Backstage, una iniciativa de Spotify, se ha destacado como una plataforma de código abierto que simplifica la administración de servicios y aplicaciones a lo largo de su ciclo de vida.
+
+## Objetivos de la Investigación:
+
+- Explorar la Arquitectura de Kubernetes: Analizar los componentes clave de Kubernetes y comprender cómo facilita la gestión de contenedores a escala.
+
+- Investigar las Funcionalidades de Backstage: Examinar las características de Backstage que permiten la gestión eficiente de servicios, desde el desarrollo hasta la implementación y el monitoreo.
+
+- Integración entre Kubernetes y Backstage: Investigar cómo la integración de Kubernetes y Backstage puede mejorar la visibilidad y la gestión de aplicaciones en un entorno de contenedores.
+
+## Metodología de Prueba:
+
+- Configuración del Entorno: Establecer un entorno de prueba con Kubernetes como orquestador de contenedores y Backstage como plataforma de gestión.
+
+- Despliegue de Aplicaciones de Muestra: Implementar aplicaciones de muestra utilizando Kubernetes y gestionar su ciclo de vida a través de Backstage.
+
+- Monitoreo y Seguimiento: Evaluar las capacidades de monitoreo proporcionadas por Kubernetes y Backstage para garantizar la visibilidad y la resolución proactiva de problemas.
+
+- Automatización de Tareas: Probar la automatización de tareas de implementación, escalado y actualización de aplicaciones utilizando la integración de Kubernetes y Backstage.
 
 ## MicroK8s
-
 
 ### Install MicroK8s on Linux
 sudo snap install microk8s --classic
 
-
 ### Check the status while Kubernetes starts
 microk8s status
-
 
 ### Turn on the services you want
 microk8s enable dashboard dns registry metrics-server hostpath-storage ingress
 
-
 ### Check services enabled
 microk8s status
 
-
 ###  Turn off a service
 microk8s disable <name> 
-
 
 ### Start and stop Kubernetes
 microk8s start 
 
 microk8s stop 
 
-
 ### Check Kubernetes
 microk8s kubectl get all --all-namespaces
-
 
 ### Access the Kubernetes dashboard
 microk8s dashboard-proxy
 
-
 ## Backstage
-
 
 ### Install Backstage
 See https://backstage.io/docs/getting-started/
 
-
 ### Config Backstage
 See https://backstage.io/docs/getting-started/configuration
 
-
 ### Config GitHub 
-
 
 #### Set GitHub Token 
 export GITHUB_TOKEN=\<github-token> 
@@ -76,7 +85,6 @@ integrations:
     #   token: ${GHE_TOKEN}
 ```
 
-
 ### Config Postgress in app-config.yaml
 add:
 
@@ -91,10 +99,7 @@ backend:
       password: secret 
 ```
 
-
-
 ## Kubernetes Plugin
-
 
 ### Kubernetes control plane 
 alias mkctl="microk8s kubectl"
@@ -103,12 +108,10 @@ mkctl cluster-info
 
 Kubernetes control plane is running at https://127.0.0.1:16443
 
-
 ### Integration Kubernetes  
 https://backstage.io/docs/features/kubernetes/
 
 https://backstage.io/docs/features/kubernetes/configuration/
-
 
 ### Set Kubernetes token
 
@@ -123,7 +126,6 @@ export K8S_MINIKUBE_TOKEN=$(kubectl -n default get secret $K8S_MINIKUBE_TOKEN_NA
 NOTE: If token is empty, use: (example)
 
 export K8S_MINIKUBE_TOKEN=eyJhbGciOiJSUzI1NiIsImtpZCI6IktSUEhyUmY4aUVSVGVMbllRcU1jTmZZTTR2SUZPY2NEbXh3SnU2emt1c3MifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJtaWNyb2s4cy1kYXNoYm9hcmQtdG9rZW4iLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiZGVmYXVsdCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6ImI1MjE1ODNmLTgxZjYtNDRmNy04MGFiLTI4Y2JlNzhkN2QzOSIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTpkZWZhdWx0In0.QqbYb7GpZyHPSDCysZo9sMEm3AZA2HF_TWw6TBDofiakA0xad7i5INQ_7AiE_08GPBJJLM7u4ymZGP44oWZfDVBNSedzKGoo4dpU5nFWqBAjmglCtMxASYLZnlFnrS1SoiQYs5plTkJ0L8vwfYMIjTK8Do1nQ13qdpRXE5mDoy2857e4W-rlaE4grbwtknky2fgZA7HIDa3c-l9sNqoPSTEeo9oWkhn3Y-GFha4hcXW8NP4GuEWf8FliqA5-H7zddPS7sJ8Cr9UvpU7izSSIP40VC_vv5DngPtngbMf05JMoGQMABytHtffHLsB60DzDfJiHNZeOmkknGiYfOdNndA
-
 
 ### Config Kubernetes in app-config.yaml
 add:
@@ -144,9 +146,7 @@ kubernetes:
           #caData: ${K8S_CONFIG_CA_DATA}
 ```
 
-
 ## Jenkins Plugin
-
 
 ### Integration Jenkins
 https://github.com/backstage/backstage/tree/master/plugins/jenkins
@@ -161,7 +161,6 @@ helm repo update
 helm search repo jenkins --devel --versions
 
 helm install jenkins jenkins/jenkins	4.3.23 --namespace default
-
 
 ## Uninstall jenkins 
 helm uninstall jenkins
@@ -184,7 +183,6 @@ kubectl get pods -n default | grep jenkins
 
 kubectl exec --namespace default -it <pod-id> -c jenkins -- /bin/cat /run/secrets/additional/chart-admin-password && echo
 
-
 ### Connect to Jenkins as an administrator
 kubectl get svc -n default | grep jenkins
 
@@ -193,7 +191,6 @@ kubectl --namespace default port-forward svc/\<service-id> 8080:8080
 Example:  kubectl --namespace default port-forward svc/jenkins-1683125347 8080:8080
 
 NOTE: Open localhost:8080 in a browser. Conect to jenkins with user Admin & password <See Get your 'admin' user password>
-
 
 ### Get Token From Jenkins
 Log in to the Jenkins instance as an administrator
@@ -230,7 +227,6 @@ Asign a Repository HTTPS URL (Github repository where is your jenkinsfile) - htt
 Install & configure Jenkins with Kubernetes
 
 https://plugins.jenkins.io/kubernetes/
-
 
 ##  Catalog File
 Create a catalog-info.yaml file in your project
