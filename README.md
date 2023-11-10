@@ -1,28 +1,27 @@
 # kubernetes-backstage-pilot
 
-En el ámbito de la gestión y despliegue de aplicaciones, Kubernetes ha emergido como una plataforma líder que facilita la orquestación eficiente de contenedores. Al mismo tiempo, herramientas como Backstage han ganado popularidad al proporcionar un entorno centralizado para la gestión del ciclo de vida de las aplicaciones. Este proyecto de investigación y prueba se enfoca en la sinergia entre Kubernetes y Backstage, explorando cómo su integración puede mejorar la eficiencia en el desarrollo, implementación y mantenimiento de aplicaciones en entornos modernos.
+## Introduction:
 
-## Contexto:
+In the realm of application management and deployment, Kubernetes has emerged as a leading platform facilitating the efficient orchestration of containers. Concurrently, tools like Backstage have gained popularity by providing a centralized environment for application lifecycle management. This research and testing project focus on the synergy between Kubernetes and Backstage, exploring how their integration can enhance efficiency in the development, deployment, and maintenance of applications in modern environments.
 
-Kubernetes, desarrollado por Google, ha revolucionado la gestión de contenedores al proporcionar una plataforma robusta y escalable para automatizar la implementación, escalado y operaciones de aplicaciones en contenedores. Por otro lado, Backstage, una iniciativa de Spotify, se ha destacado como una plataforma de código abierto que simplifica la administración de servicios y aplicaciones a lo largo de su ciclo de vida.
+## Context:
 
-## Objetivos de la Investigación:
+Kubernetes, developed by Google, has revolutionized container management by providing a robust and scalable platform to automate the deployment, scaling, and operations of containerized applications. On the other hand, Backstage, an initiative by Spotify, has stood out as an open-source platform that simplifies service and application management throughout their lifecycle.
 
-- Explorar la Arquitectura de Kubernetes: Analizar los componentes clave de Kubernetes y comprender cómo facilita la gestión de contenedores a escala.
+## Research Objectives:
 
-- Investigar las Funcionalidades de Backstage: Examinar las características de Backstage que permiten la gestión eficiente de servicios, desde el desarrollo hasta la implementación y el monitoreo.
+- Explore Kubernetes Architecture: Analyze key components of Kubernetes and understand how it facilitates container management at scale.
+Investigate Backstage Features:
 
-- Integración entre Kubernetes y Backstage: Investigar cómo la integración de Kubernetes y Backstage puede mejorar la visibilidad y la gestión de aplicaciones en un entorno de contenedores.
+- Examine Backstage's features that enable efficient service management, from development to deployment and monitoring.
 
-## Metodología de Prueba:
+- Integration between Kubernetes and Backstage: Investigate how the integration of Kubernetes and Backstage can enhance visibility and management of applications in a container environment.
 
-- Configuración del Entorno: Establecer un entorno de prueba con Kubernetes como orquestador de contenedores y Backstage como plataforma de gestión.
+## Testing Methodology:
 
-- Despliegue de Aplicaciones de Muestra: Implementar aplicaciones de muestra utilizando Kubernetes y gestionar su ciclo de vida a través de Backstage.
-
-- Monitoreo y Seguimiento: Evaluar las capacidades de monitoreo proporcionadas por Kubernetes y Backstage para garantizar la visibilidad y la resolución proactiva de problemas.
-
-- Automatización de Tareas: Probar la automatización de tareas de implementación, escalado y actualización de aplicaciones utilizando la integración de Kubernetes y Backstage.
+- Environment Setup: Establish a test environment with Kubernetes as the container orchestrator and Backstage as the management platform.
+- Deployment of Sample Applications: Deploy sample applications using Kubernetes and manage their lifecycle through Backstage.
+- Monitoring and Tracking: Assess monitoring capabilities provided by Kubernetes and Backstage to ensure visibility and proactive issue resolution.
 
 ## MicroK8s
 
